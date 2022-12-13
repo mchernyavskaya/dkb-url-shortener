@@ -5,6 +5,7 @@ import io.klogging.config.loggingConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
+
 @SpringBootApplication
 class DkbUrlShortenerApplication
 
