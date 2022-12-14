@@ -48,6 +48,7 @@ class RedisService(
             atomicLong.set(START_KEY)
             currentId = START_KEY
         }
+        Long.MAX_VALUE
         return currentId.toString(KEY_RADIX)
     }
 

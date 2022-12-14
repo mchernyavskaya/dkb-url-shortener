@@ -1,4 +1,4 @@
-.PHONY: build docker-build up down test clean-images
+.PHONY: build docker-build up down test clean-images run
 
 DOCKER_IMAGE=dkb-url-shortener-app:latest
 
@@ -20,5 +20,8 @@ down:
 
 test:
 	./gradlew test
+
+run:
+	./gradlew bootRun
 
 

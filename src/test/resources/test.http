@@ -2,7 +2,8 @@ GET http://localhost:8080/56565
 Accept: application/json
 
 ###
-POST http://localhost:8080/
+POST http://localhost:8081/
 Content-Type: text/plain
+Accept: application/json
 
 https://www.example.com?param=2
