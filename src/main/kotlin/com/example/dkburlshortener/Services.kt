@@ -9,24 +9,40 @@ import org.springframework.stereotype.Service
 
 
 interface UrlShortener {
-    fun shorten(url: String): String
+    /**
+     * Get the short key based on the long url
+     */
+    fun shortenToKey(longUrl: String): String
+
+    /**
+     * Get the long URL based on the short key
+     */
+    fun expandKey(key: String): String?
 }
 
 @Service
-class UrlShortenerService : UrlShortener {
-    override fun shorten(url: String): String {
-        return "http://localhost:8080/shortenedUrl"
+class UrlShortenerService(
+    @Autowired private val redisService: RedisService
+) : UrlShortener {
+    override fun shortenToKey(longUrl: String): String {
+        val key = redisService.uniqueKey()
+        redisService.writeValue(key, longUrl)
+        return key
+    }
+
+    override fun expandKey(key: String): String? {
+        return redisService.readValue(key)
     }
 }
 
 @Service
 class RedisService(
-    @Autowired val connectionFactory: RedisConnectionFactory,
-    @Autowired val redisTemplate: StringRedisTemplate
+    @Autowired private val connectionFactory: RedisConnectionFactory,
+    @Autowired private val redisTemplate: StringRedisTemplate
 ) {
     fun uniqueKey(): String {
         val atomicLong = RedisAtomicLong(ID_KEY, connectionFactory)
-        return atomicLong.incrementAndGet().toString(32)
+        return atomicLong.incrementAndGet().toString(KEY_RADIX)
     }
 
     fun writeValue(key: String, value: String) {
@@ -39,5 +55,6 @@ class RedisService(
 
     companion object : NoCoLogging {
         const val ID_KEY = "all:urls:unique_id:key"
+        const val KEY_RADIX = 32
     }
 }

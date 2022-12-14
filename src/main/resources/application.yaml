@@ -12,3 +12,6 @@ management:
 
 server:
   port: 8080
+
+application:
+  host: http://localhost:8080

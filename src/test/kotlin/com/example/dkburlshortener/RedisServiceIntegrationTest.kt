@@ -1,6 +1,6 @@
 package com.example.dkburlshortener
 
-import org.junit.jupiter.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,7 +31,7 @@ class RedisServiceIntegrationTest {
     fun uniqueKey() {
         redisService.uniqueKey().also {
             println("Generated ID: $it")
-            assertNotNull(it)
+            assertThat(it).isNotNull
         }
     }
 
@@ -43,9 +43,9 @@ class RedisServiceIntegrationTest {
     @Test
     fun readValue() {
         redisService.readValue(key).also {
-            assertNull(it)
+            assertThat(it).isNull()
             redisService.writeValue(key, value).also {
-                assertEquals(value, redisService.readValue(key))
+                assertThat(redisService.readValue(key)).isEqualTo(value)
             }
         }
     }
