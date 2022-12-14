@@ -31,7 +31,8 @@ class RedisServiceIntegrationTest {
     fun uniqueKey() {
         redisService.uniqueKey().also {
             println("Generated ID: $it")
-            assertThat(it).isNotNull
+            // this is the key that's generated from the initial seed of 100000
+            assertThat(it).isEqualTo("31l0")
         }
     }
 

@@ -42,7 +42,13 @@ class RedisService(
 ) {
     fun uniqueKey(): String {
         val atomicLong = RedisAtomicLong(ID_KEY, connectionFactory)
-        return atomicLong.incrementAndGet().toString(KEY_RADIX)
+        var currentId = atomicLong.incrementAndGet()
+        if (currentId == 1L) {
+            // if it's just now been created, set to initial value
+            atomicLong.set(START_KEY)
+            currentId = START_KEY
+        }
+        return currentId.toString(KEY_RADIX)
     }
 
     fun writeValue(key: String, value: String) {
@@ -54,7 +60,8 @@ class RedisService(
     }
 
     companion object : NoCoLogging {
-        const val ID_KEY = "all:urls:unique_id:key"
-        const val KEY_RADIX = 32
+        private const val ID_KEY = "all:urls:unique_id:key"
+        private const val KEY_RADIX = 32
+        const val START_KEY = 100000L
     }
 }
