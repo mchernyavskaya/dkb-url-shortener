@@ -29,7 +29,13 @@ eb0649bc8fde   dkb-url-shortener-app:latest   "java -jar -Dspring.…"   7 secon
 29d9c6a0e47e   redis:alpine                   "docker-entrypoint.s…"   7 seconds ago   Up 6 seconds   0.0.0.0:6379->6379/tcp   dkb-url-shortener-redis-1
 ```
 
-These commands are dependent on other commands that can also be run separately if needed. 
+These commands are dependent on other commands that can also be run separately if needed.
+
+### Check how it works
+
+Use the HTTP commands file provided in the [test.http](src/test/resources/test.http). Provide your own arguments as needed.
+
+## Other MAKE commands
 
 ### Cleaning the docker image
 
@@ -104,7 +110,7 @@ The OpenAPI description is provided in [openapi.yaml](src/main/resources/META-IN
 There are several profiles:
 
 * default - the configuration is specified in the [application.yaml](src/main/resources/application.yaml) file.
-* `docker` - the configuration is specified in the [application-docker.yaml](src/main/resources/application-docker.yaml) file. This profile is used to start everything (the application itself and the Redis instance that's required to run it) in Docker.
+* `docker` - the configuration is specified in the [application-docker.yaml](src/main/resources/application-docker.yaml) file. This profile is used to start everything (the application itself and the Redis instance that's required to run it) in Docker. The difference between the main profile and the default one is the `server.port`. By default, it's 8080; the docker profile has 8081. This is done intentionally, to be able to run both at the same time on one machine and not have to always kill the docker one to debug the main code. 
 * `prod` - the configuration is specified in the [application-prod.yaml](src/main/resources/application-prod.yaml) file. The file that should be used to override the properties for a production instance.
 
 ## Q&A

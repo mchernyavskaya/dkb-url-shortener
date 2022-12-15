@@ -1,4 +1,4 @@
-GET http://localhost:8080/56565
+GET http://localhost:8081/31l2
 Accept: application/json
 
 ###
@@ -6,4 +6,4 @@ POST http://localhost:8081/
 Content-Type: text/plain
 Accept: application/json
 
-https://www.example.com?param=2
+https://www.example.com?param=4
