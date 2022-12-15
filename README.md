@@ -95,6 +95,10 @@ It would return the same response, but in this response, the long URL would be a
 
 **NOTE: the service does no redirect to the long URL. It just provides it.**
 
+## OpenAPI description
+
+The OpenAPI description is provided in [openapi.yaml](src/main/resources/META-INF/openapi.yaml) and can be used to implement or generate the client API.
+
 ## Application profiles
 
 There are several profiles:
@@ -125,13 +129,13 @@ In a very stupid way, by using the [Long.toString(radix: Int)](https://kotlinlan
 
 * So if it's a `Long`, what happens when it overflows?
 
-`Long.MAX_VALUE` is `9223372036854775807`. It's 9 quadrillion. The [world population](https://en.wikipedia.org/wiki/World_population) is about 8 billion people now. So even if every person on earth would be adding a URL into our shortener, we'd still have a whole lot to spare. At this point, we'd probably have much more serious concerns about how to scale the storage itself.   
+`Long.MAX_VALUE` is `9223372036854775807`. It's 9 quadrillion. The [world population](https://en.wikipedia.org/wiki/World_population) is about 8 billion people now. So even if every person on earth would be adding a URL into our shortener, we'd still have a whole lot to spare. At this point, we'd also probably have much more serious concerns about how to scale the storage and the service itself.   
 
 ## Possible improvements
 
 * Protect from possible attacks by checking the URLs against the regexp. For now, there are no checks on the incoming data.
 * Convert the application into a reactive one (when premature optimization stops being premature).
-* Add the OpenAPI descriptions to the REST endpoints.
+* Add the OpenAPI generation to the REST endpoints instead of the manually created version.
 * Have an option to add TTL to the links and clean up the ones that have expired.
 * As an alternative, keep the "last accessed" attribute on the links and clean them up after some fixed expiration period when unused.
 * Add registration and some kind of bonuses for registered (and subscribed) users (some fancy URLs).

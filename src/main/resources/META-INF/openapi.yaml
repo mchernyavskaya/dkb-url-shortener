@@ -1,0 +1,47 @@
+openapi: 3.0.3
+info:
+  title: Url Shortener API specification
+  description: Url Shortener API specification
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080'
+paths:
+  /:
+    get:
+      description: Returns a long URL based on the short key
+      responses:
+        '200':
+          description: A JSON object containing both long and short URLs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/urlResponse"
+        '404':
+          description: The NOT_FOUND status returns when the URL lookup failed (the key does not exist)
+    post:
+      description: Returns a short URL based on the long one
+      parameters:
+        - name: key
+          in: path
+          description: A short key that was part of the short URL. Short URL contains the base URL (root domain) and the suffix part; this part is the key. Example - https\://short.ly/abcd would have key abcd.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A JSON object containing both long and short URLs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/urlResponse"
+components:
+  schemas:
+    urlResponse:
+      type: object
+      properties:
+        longUrl:
+          type: string
+        shortUrl:
+          type: string
+
+  
